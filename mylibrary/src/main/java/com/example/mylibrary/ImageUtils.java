@@ -232,7 +232,6 @@ public class ImageUtils {
         ContentValues contentValues = new ContentValues(1);
         contentValues.put(MediaStore.Images.Media.DATA, file.getAbsolutePath());
         Uri uri = activity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-//        Uri uri = FileProvider.getUriForFile(activity,"com.example.administrator.provider", file);
         return uri;
     }
 
@@ -264,10 +263,12 @@ public class ImageUtils {
 
 
     /**
-     * 跳转到系统裁切界面
-     *
+     * 跳转到系统裁切界面（默认为1：1）
+     *(模拟器使用7.1成功，7.0使用失败)
      * @param activity
      * @param uri
+     * @param isReturnIntent  选择数据保存方式 true （intent）  false （uri）
+     * @param cropWidth，cropHeight 裁剪宽高
      */
     public static void cropPhoto(Activity activity, Uri uri,float cropWidth,float cropHeight, int flag,Boolean isReturnIntent) {
         //跳转到android系统自带的图片裁剪工具
@@ -278,6 +279,33 @@ public class ImageUtils {
         //比例
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
+        //裁剪宽高
+        intent.putExtra("outputX", cropWidth);
+        intent.putExtra("outputY", cropHeight);
+        //返回data数据（intent）false 不返回  true 返回(通常只能返回小数据，大数据返回容易挂掉，
+        // 因此直接用false 然后uri来传递数据)
+        //如果为true 则是用intent来传递数据 此处uri的值不会改变
+        intent.putExtra("return-data", isReturnIntent);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+        activity.startActivityForResult(intent, flag);
+    }
+    /**
+     * 跳转到系统裁切界面（自定义裁剪比例）
+     *(模拟器使用7.1成功，7.0使用失败)
+     * @param activity
+     * @param uri
+     * @param isReturnIntent  选择数据保存方式 true （intent）  false （uri）
+     * @param cropWidth，cropHeight 裁剪宽高
+     */
+    public static void cropPhoto(Activity activity, Uri uri,float cropWidth,float cropHeight,int aspectX,int aspectY,int flag,Boolean isReturnIntent) {
+        //跳转到android系统自带的图片裁剪工具
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        //设置裁剪
+        intent.putExtra("crop", true);
+        //比例
+        intent.putExtra("aspectX", aspectX);
+        intent.putExtra("aspectY", aspectY);
         //裁剪宽高
         intent.putExtra("outputX", cropWidth);
         intent.putExtra("outputY", cropHeight);
