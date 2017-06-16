@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MyLibrary</string>
+    <string name="my_test">哈哈哈，这是我自己封装的jar</string>
+</resources>
