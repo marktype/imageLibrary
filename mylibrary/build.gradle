@@ -35,7 +35,7 @@ dependencies {
 
 //task to delete the old jar
 task deleteOldJar(type: Delete) {
-    delete 'release/AndroidPlugin.jar'
+    delete 'release/imageLibrary.jar'
 }
 
 //task to export contents as jar
@@ -44,7 +44,7 @@ task exportJar(type: Copy) {
     into('release/')
     include('classes.jar')
     ///Rename the jar
-    rename('classes.jar', 'AndroidPlugin.jar')
+    rename('classes.jar', 'imageLibrary.jar')
 }
 
 exportJar.dependsOn(deleteOldJar, build)
