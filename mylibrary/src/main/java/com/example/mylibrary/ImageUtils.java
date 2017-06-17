@@ -36,7 +36,7 @@ import java.util.Calendar;
 
 /**
  * 图像处理bitmap&Camera
- * Created by chenbangoo on 2017/4/17.
+ * Created by fj on 2017/4/17.
  */
 public class ImageUtils {
 
