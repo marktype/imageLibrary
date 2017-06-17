@@ -10,7 +10,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -162,26 +161,26 @@ public class NetManager {
         }
     }
 
-    private Toast mInfoToast;
+    private Toast toast;
 
     /**
      * 显示toast对话框
      *
      * @param msg
      */
-    public void showToast(Context context, CharSequence msg) {
+    public void showToast(Context context,String msg) {
         if (msg == null) {
             return;
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        if (toast != null) {
+            toast.setText(msg);
+            toast.setDuration(Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         } else {
-            if (mInfoToast == null) {
-                mInfoToast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
-            }
-            mInfoToast.cancel();
-            mInfoToast.setText(msg);
-            mInfoToast.show();
+            toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
     }
 
