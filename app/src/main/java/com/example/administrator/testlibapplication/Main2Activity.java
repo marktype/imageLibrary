@@ -9,7 +9,7 @@ import android.widget.Button;
 import com.example.mylibrary.NetManager;
 
 public class Main2Activity extends AppCompatActivity {
-    private Button mBtn,mWifi,mMob;
+    private Button mBtn,mWifi,mMob,mMoblieAddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +17,7 @@ public class Main2Activity extends AppCompatActivity {
         mBtn = (Button) findViewById(R.id.check_net);
         mWifi = (Button) findViewById(R.id.check_wifi_net);
         mMob = (Button) findViewById(R.id.check_moblie_net);
+        mMoblieAddress = (Button) findViewById(R.id.get_moblie_address);
 
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +53,13 @@ public class Main2Activity extends AppCompatActivity {
                 }else {
                     NetManager.getNetManagerInstance().showToast(Main2Activity.this,"moblie没有连接");
                 }
+            }
+        });
+        mMoblieAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetManager.getNetManagerInstance().showToast(Main2Activity.this,NetManager.
+                        getNetManagerInstance().getIPAddress(Main2Activity.this));
             }
         });
     }
