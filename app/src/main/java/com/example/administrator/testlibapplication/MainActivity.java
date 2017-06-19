@@ -83,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("tag","file------"+file.getAbsolutePath()+"-----uri-----"+uri);
             Glide.with(MainActivity.this).load(uri).into(mImage);
 //            mImage.setImageURI(uri);
-        }else if (requestCode == 124){
-            Toast.makeText(this,"124",Toast.LENGTH_SHORT).show();
         }else if (requestCode == 15){
             Log.d("tag","data---------"+data);
             if (data != null){

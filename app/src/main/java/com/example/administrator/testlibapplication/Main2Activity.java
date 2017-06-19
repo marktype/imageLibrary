@@ -6,7 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.mylibrary.NetManager;
+import com.example.mylibrary.NetUtils;
 
 public class Main2Activity extends AppCompatActivity {
     private Button mBtn,mWifi,mMob,mMoblieAddress;
@@ -22,11 +22,11 @@ public class Main2Activity extends AppCompatActivity {
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetManager.isConnected(Main2Activity.this)){
-                    NetManager.getNetManagerInstance().showToast(Main2Activity.this,"网络已经连接");
+                if (NetUtils.isConnected(Main2Activity.this)){
+                    NetUtils.getNetManagerInstance().showToast(Main2Activity.this,"网络已经连接");
                 }else {
 //                    NetManager.getNetManagerInstance().setNetwork(Main2Activity.this);
-                    NetManager.getNetManagerInstance().showProgressDialog(Main2Activity.this);
+                    NetUtils.getNetManagerInstance().showProgressDialog(Main2Activity.this);
                 }
 
 //                NetManager.getNetManagerInstance().checkNetConnection(Main2Activity.this);
@@ -36,10 +36,10 @@ public class Main2Activity extends AppCompatActivity {
         mWifi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetManager.getNetManagerInstance().isWifiConnected(Main2Activity.this)){
-                    NetManager.getNetManagerInstance().showToast(Main2Activity.this,"wifi连接");
+                if (NetUtils.getNetManagerInstance().isWifiConnected(Main2Activity.this)){
+                    NetUtils.getNetManagerInstance().showToast(Main2Activity.this,"wifi连接");
                 }else {
-                    NetManager.getNetManagerInstance().showToast(Main2Activity.this,"wifi没有连接");
+                    NetUtils.getNetManagerInstance().showToast(Main2Activity.this,"wifi没有连接");
                 }
 
             }
@@ -48,17 +48,17 @@ public class Main2Activity extends AppCompatActivity {
         mMob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetManager.getNetManagerInstance().isMobileConnected(Main2Activity.this)){
-                    NetManager.getNetManagerInstance().showToast(Main2Activity.this,"moblie连接");
+                if (NetUtils.getNetManagerInstance().isMobileConnected(Main2Activity.this)){
+                    NetUtils.getNetManagerInstance().showToast(Main2Activity.this,"moblie连接");
                 }else {
-                    NetManager.getNetManagerInstance().showToast(Main2Activity.this,"moblie没有连接");
+                    NetUtils.getNetManagerInstance().showToast(Main2Activity.this,"moblie没有连接");
                 }
             }
         });
         mMoblieAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NetManager.getNetManagerInstance().showToast(Main2Activity.this,NetManager.
+                NetUtils.getNetManagerInstance().showToast(Main2Activity.this,NetUtils.
                         getNetManagerInstance().getIPAddress(Main2Activity.this));
             }
         });
@@ -66,7 +66,7 @@ public class Main2Activity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        NetManager.getNetManagerInstance().cancelProgressDialog();
+        NetUtils.getNetManagerInstance().cancelProgressDialog();
 
         return super.onKeyDown(keyCode, event);
     }
