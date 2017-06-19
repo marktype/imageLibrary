@@ -24,15 +24,15 @@ import java.util.Enumeration;
  * 网络权限管理
  */
 
-public class NetManager {
+public class NetUtils {
 
-    private static NetManager netManager = new NetManager();
+    private static NetUtils netManager = new NetUtils();
 
-    private NetManager() {
+    private NetUtils() {
 
     }
 
-    public static NetManager getNetManagerInstance() {
+    public static NetUtils getNetManagerInstance() {
         return netManager;
     }
 
@@ -175,13 +175,11 @@ public class NetManager {
         if (toast != null) {
             toast.setText(msg);
             toast.setDuration(Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
         } else {
             toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
         }
+//            toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     /**
