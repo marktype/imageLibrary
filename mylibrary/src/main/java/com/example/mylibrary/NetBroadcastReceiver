@@ -1,0 +1,63 @@
+package com.example.kathy.myapplication;   //修改为自己的包名
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+
+/**
+ * Created by Kathy on 2017/9/23.
+ * 广播注册监听网络情况，可以达到实时监听的效果
+ */
+
+public class NetBroadcastReceiver extends BroadcastReceiver
+{
+    private int DAILOG_TIME = 1;
+    private int MISS_DAILOG = 2;
+    private Context context;
+    private Handler handler = new Handler()
+    {
+        public void handleMessage(Message paramAnonymousMessage)
+        {
+            int i = NetUtil.getNetWorkState(NetBroadcastReceiver.this.context);
+            if ((i < 0) && (paramAnonymousMessage.what == NetBroadcastReceiver.this.DAILOG_TIME))
+                LocalVideoActivity.showToast(context);//处理没网时的情况    根据自己情况修改
+        }
+    };
+
+    public void onNetChange(Context paramContext, int paramInt)
+    {
+        if (paramInt >= 0)
+            this.handler.sendEmptyMessageDelayed(this.MISS_DAILOG, 3000L);
+        while (paramInt >= 0)
+            return;
+        this.handler.sendEmptyMessageDelayed(this.DAILOG_TIME, 3000L);
+    }
+
+    public void onReceive(Context paramContext, Intent paramIntent)
+    {
+        this.context = paramContext;
+        if (paramIntent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE"))
+            onNetChange(paramContext, NetUtil.getNetWorkState(paramContext));
+    }
+    
+    //获取网络状态方法  在自己创建的NetUtil工具类中，这里没写这个类就直接提了出来写在这儿
+     public static int getNetWorkState(Context paramContext)
+    {
+        int i = -1;
+        NetworkInfo localNetworkInfo = ((ConnectivityManager)paramContext.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        if ((localNetworkInfo != null) && (localNetworkInfo.isConnected()) && (localNetworkInfo.getType() >= 0))
+            i = 1;
+        return i;
+    }
+    
+}
+
+//manifest  注册
+//<receiver android:name=".NetBroadcastReceiver">
+//<intent-filter>
+//<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+//</intent-filter>
+//</receiver>
+
